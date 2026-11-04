@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Diagram - WEB INKA</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #1e293b;
+            margin-bottom: 2rem;
+        }
+        .mermaid-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            width: 100%;
+            max-width: 1200px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>System Class Diagram - WEB INKA</h1>
+    
+    <div class="mermaid-container">
+        <div class="mermaid">
+            classDiagram
+                class User {
+                    +BigInteger id
+                    +String name
+                    +String email
+                    +String password
+                    +String role
+                    +remember_token
+                    +timestamps()
+                }
+
+                class Course {
+                    +BigInteger id
+                    +String name
+                    +Text description
+                    +String image
+                    +Decimal price
+                    +Integer duration
+                    +timestamps()
+                }
+
+                class Registration {
+                    +BigInteger id
+                    +BigInteger user_id
+                    +BigInteger course_id
+                    +String status
+                    +String payment_proof
+                    +String pdf_path
+                    +timestamps()
+                }
+
+                class News {
+                    +BigInteger id
+                    +String title
+                    +Text content
+                    +String image
+                    +timestamps()
+                }
+
+                class GalleryImage {
+                    +BigInteger id
+                    +String title
+                    +String image_path
+                    +timestamps()
+                }
+
+                class SiteSetting {
+                    +BigInteger id
+                    +String key
+                    +Text value
+                    +timestamps()
+                }
+
+                class AdminController {
+                    +index()
+                    +courses()
+                    +registrations()
+                    +news()
+                    +gallery()
+                    +settings()
+                }
+
+                class AuthController {
+                    +showLoginForm()
+                    +login()
+                    +showRegisterForm()
+                    +register()
+                    +logout()
+                }
+
+                class PagesController {
+                    +home()
+                    +courses()
+                    +news()
+                    +gallery()
+                    +about()
+                }
+
+                class RegistrationController {
+                    +create()
+                    +store()
+                    +show()
+                    +updateStatus()
+                    +downloadPdf()
+                }
+
+                User "1" -- "*" Registration : has
+                Course "1" -- "*" Registration : belongs to
+
+                AdminController ..> User : manages
+                AdminController ..> Course : manages
+                AdminController ..> Registration : manages
+                AdminController ..> News : manages
+                AdminController ..> GalleryImage : manages
+                AdminController ..> SiteSetting : manages
+
+                AuthController ..> User : authenticates
+
+                PagesController ..> Course : reads
+                PagesController ..> News : reads
+                PagesController ..> GalleryImage : reads
+                PagesController ..> SiteSetting : reads
+
+                RegistrationController ..> Registration : creates/updates
+                RegistrationController ..> Course : reads
+        </div>
+    </div>
+</body>
+</html>

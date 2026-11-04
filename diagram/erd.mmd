@@ -1,0 +1,73 @@
+erDiagram
+    USERS ||--o{ REGISTRATIONS : "has"
+    COURSES ||--o{ REGISTRATIONS : "has"
+
+    USERS {
+        bigint id PK
+        string name
+        string email
+        timestamp email_verified_at
+        string password
+        string role
+        string remember_token
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    COURSES {
+        bigint id PK
+        string name
+        string category
+        text description
+        integer price
+        string duration
+        string image
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    REGISTRATIONS {
+        bigint id PK
+        bigint user_id FK
+        bigint course_id FK
+        string nama_lengkap
+        date tanggal_lahir
+        text alamat
+        string nomer_hp
+        string email
+        string ijazah_path
+        string ktp_path
+        string kk_path
+        string pas_foto_path
+        string payment_receipt_path
+        string status
+        text admin_notes
+        string course_name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    NEWS {
+        bigint id PK
+        string title
+        text content
+        string image_path
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    SITE_SETTINGS {
+        bigint id PK
+        string key
+        text value
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    GALLERY_IMAGES {
+        bigint id PK
+        string title
+        string image_path
+        timestamp created_at
+        timestamp updated_at
+    }

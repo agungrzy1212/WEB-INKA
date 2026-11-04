@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentasi Database - WEB INKA</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --bg-color: #f8f9fa;
+            --table-border: #dee2e6;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid var(--table-border);
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid var(--table-border);
+            text-align: left;
+        }
+        th {
+            background-color: #f1f3f5;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #d63384;
+        }
+        .section-title {
+            margin-top: 40px;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Dokumentasi Database - WEB INKA</h1>
+
+    <h2 class="section-title">1. Visualisasi Relasi Tabel (ERD)</h2>
+    <p>Diagram berikut menunjukkan entitas yang ada di dalam database beserta garis relasi antar tabel (One-to-Many). Anda bisa menggeser tabel ini jika layarnya terbatas.</p>
+    
+    <div class="mermaid-container">
+        <div class="mermaid">
+            erDiagram
+                USERS ||--o{ REGISTRATIONS : "has"
+                COURSES ||--o{ REGISTRATIONS : "has"
+
+                USERS {
+                    bigint id PK
+                    string name
+                    string email
+                    timestamp email_verified_at
+                    string password
+                    string role
+                    string remember_token
+                    timestamp created_at
+                    timestamp updated_at
+                }
+
+                COURSES {
+                    bigint id PK
+                    string name
+                    string category
+                    text description
+                    integer price
+                    string duration
+                    string image
+                    timestamp created_at
+                    timestamp updated_at
+                }
+
+                REGISTRATIONS {
+                    bigint id PK
+                    bigint user_id FK
+                    bigint course_id FK
+                    string nama_lengkap
+                    date tanggal_lahir
+                    text alamat
+                    string nomer_hp
+                    string email
+                    string ijazah_path
+                    string ktp_path
+                    string kk_path
+                    string pas_foto_path
+                    string payment_receipt_path
+                    string status
+                    text admin_notes
+                    string course_name
+                    timestamp created_at
+                    timestamp updated_at
+                }
+
+                NEWS {
+                    bigint id PK
+                    string title
+                    text content
+                    string image_path
+                    timestamp created_at
+                    timestamp updated_at
+                }
+
+                SITE_SETTINGS {
+                    bigint id PK
+                    string key
+                    text value
+                    timestamp created_at
+                    timestamp updated_at
+                }
+
+                GALLERY_IMAGES {
+                    bigint id PK
+                    string title
+                    string image_path
+                    timestamp created_at
+                    timestamp updated_at
+                }
+        </div>
+    </div>
+
+    <h2 class="section-title">2. Struktur Data Tabel (Data Dictionary)</h2>
+    <p>Detail skema dan informasi mengenai atribut setiap tabel pada database.</p>
+
+    <h3>Tabel <code>users</code></h3>
+    <table>
+        <thead>
+            <tr><th>Nama Kolom</th><th>Tipe Data</th><th>Keterangan</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>id</code></td><td>BIGINT</td><td>Primary Key, Auto Increment</td></tr>
+            <tr><td><code>name</code></td><td>VARCHAR</td><td>Nama Pengguna</td></tr>
+            <tr><td><code>email</code></td><td>VARCHAR</td><td>Email Pengguna, Unique</td></tr>
+            <tr><td><code>email_verified_at</code></td><td>TIMESTAMP</td><td>Waktu verifikasi email (Nullable)</td></tr>
+            <tr><td><code>password</code></td><td>VARCHAR</td><td>Password Hashed</td></tr>
+            <tr><td><code>role</code></td><td>VARCHAR</td><td>Peran pengguna (default: 'siswa')</td></tr>
+            <tr><td><code>remember_token</code></td><td>VARCHAR</td><td>Token untuk fitur remember me</td></tr>
+            <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>Waktu data dibuat</td></tr>
+            <tr><td><code>updated_at</code></td><td>TIMESTAMP</td><td>Waktu data diupdate</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Tabel <code>courses</code></h3>
+    <table>
+        <thead>
+            <tr><th>Nama Kolom</th><th>Tipe Data</th><th>Keterangan</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>id</code></td><td>BIGINT</td><td>Primary Key, Auto Increment</td></tr>
+            <tr><td><code>name</code></td><td>VARCHAR</td><td>Nama Kursus</td></tr>
+            <tr><td><code>category</code></td><td>VARCHAR</td><td>Kategori Kursus</td></tr>
+            <tr><td><code>description</code></td><td>TEXT</td><td>Deskripsi Kursus (Nullable)</td></tr>
+            <tr><td><code>price</code></td><td>INTEGER</td><td>Harga Kursus (default: 0)</td></tr>
+            <tr><td><code>duration</code></td><td>VARCHAR</td><td>Durasi Kursus (Nullable)</td></tr>
+            <tr><td><code>image</code></td><td>VARCHAR</td><td>Path file gambar kursus (Nullable)</td></tr>
+            <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>Waktu data dibuat</td></tr>
+            <tr><td><code>updated_at</code></td><td>TIMESTAMP</td><td>Waktu data diupdate</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Tabel <code>registrations</code></h3>
+    <table>
+        <thead>
+            <tr><th>Nama Kolom</th><th>Tipe Data</th><th>Keterangan</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>id</code></td><td>BIGINT</td><td>Primary Key, Auto Increment</td></tr>
+            <tr><td><code>user_id</code></td><td>BIGINT</td><td>Foreign Key ke tabel <code>users</code> (Cascade Delete)</td></tr>
+            <tr><td><code>course_id</code></td><td>BIGINT</td><td>Foreign Key ke tabel <code>courses</code> (Cascade Delete)</td></tr>
+            <tr><td><code>nama_lengkap</code></td><td>VARCHAR</td><td>Nama lengkap pendaftar</td></tr>
+            <tr><td><code>tanggal_lahir</code></td><td>DATE</td><td>Tanggal lahir pendaftar</td></tr>
+            <tr><td><code>alamat</code></td><td>TEXT</td><td>Alamat domisili</td></tr>
+            <tr><td><code>nomer_hp</code></td><td>VARCHAR</td><td>Nomor Handphone</td></tr>
+            <tr><td><code>email</code></td><td>VARCHAR</td><td>Email pendaftar</td></tr>
+            <tr><td><code>ijazah_path</code></td><td>VARCHAR</td><td>Path file upload ijazah</td></tr>
+            <tr><td><code>ktp_path</code></td><td>VARCHAR</td><td>Path file upload KTP</td></tr>
+            <tr><td><code>kk_path</code></td><td>VARCHAR</td><td>Path file upload Kartu Keluarga</td></tr>
+            <tr><td><code>pas_foto_path</code></td><td>VARCHAR</td><td>Path file upload Pas Foto</td></tr>
+            <tr><td><code>payment_receipt_path</code></td><td>VARCHAR</td><td>Path bukti pembayaran (Nullable)</td></tr>
+            <tr><td><code>status</code></td><td>VARCHAR</td><td>Status pendaftaran (pending, approved, rejected)</td></tr>
+            <tr><td><code>admin_notes</code></td><td>TEXT</td><td>Catatan evaluasi dari admin (Nullable)</td></tr>
+            <tr><td><code>course_name</code></td><td>VARCHAR</td><td>Nama kursus saat pendaftaran dilakukan</td></tr>
+            <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>Waktu data dibuat</td></tr>
+            <tr><td><code>updated_at</code></td><td>TIMESTAMP</td><td>Waktu data diupdate</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Tabel <code>news</code></h3>
+    <table>
+        <thead>
+            <tr><th>Nama Kolom</th><th>Tipe Data</th><th>Keterangan</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>id</code></td><td>BIGINT</td><td>Primary Key, Auto Increment</td></tr>
+            <tr><td><code>title</code></td><td>VARCHAR</td><td>Judul Berita</td></tr>
+            <tr><td><code>content</code></td><td>TEXT</td><td>Konten lengkap Berita</td></tr>
+            <tr><td><code>image_path</code></td><td>VARCHAR</td><td>Path file gambar berita (Nullable)</td></tr>
+            <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>Waktu data dibuat</td></tr>
+            <tr><td><code>updated_at</code></td><td>TIMESTAMP</td><td>Waktu data diupdate</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Tabel <code>site_settings</code></h3>
+    <table>
+        <thead>
+            <tr><th>Nama Kolom</th><th>Tipe Data</th><th>Keterangan</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>id</code></td><td>BIGINT</td><td>Primary Key, Auto Increment</td></tr>
+            <tr><td><code>key</code></td><td>VARCHAR</td><td>Kunci pengaturan, Unique</td></tr>
+            <tr><td><code>value</code></td><td>TEXT</td><td>Nilai dari pengaturan (Nullable)</td></tr>
+            <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>Waktu data dibuat</td></tr>
+            <tr><td><code>updated_at</code></td><td>TIMESTAMP</td><td>Waktu data diupdate</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Tabel <code>gallery_images</code></h3>
+    <table>
+        <thead>
+            <tr><th>Nama Kolom</th><th>Tipe Data</th><th>Keterangan</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>id</code></td><td>BIGINT</td><td>Primary Key, Auto Increment</td></tr>
+            <tr><td><code>title</code></td><td>VARCHAR</td><td>Judul Gambar (Nullable)</td></tr>
+            <tr><td><code>image_path</code></td><td>VARCHAR</td><td>Path file gambar</td></tr>
+            <tr><td><code>created_at</code></td><td>TIMESTAMP</td><td>Waktu data dibuat</td></tr>
+            <tr><td><code>updated_at</code></td><td>TIMESTAMP</td><td>Waktu data diupdate</td></tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

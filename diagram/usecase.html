@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Case Diagram - Website LPK INKA</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .mermaid {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            width: 100%;
+            overflow-x: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Use Case Diagram - Website LPK INKA</h1>
+    
+    <div class="mermaid">
+        flowchart LR
+            %% Styling for Actors
+            classDef actor fill:#d4edda,stroke:#28a745,stroke-width:2px,color:#155724,font-weight:bold;
+            classDef usecase fill:#e2e3e5,stroke:#6c757d,stroke-width:1px,color:#383d41;
+            
+            %% Actors
+            Guest["Guest / Calon Siswa"]:::actor
+            Siswa["Siswa (Student)"]:::actor
+            Admin["Administrator"]:::actor
+
+            subgraph Public["Website Public Area"]
+                direction TB
+                UC_ViewHome(["Lihat Beranda"]):::usecase
+                UC_ViewProfil(["Lihat Profil"]):::usecase
+                UC_ViewKursus(["Lihat Daftar Kursus"]):::usecase
+                UC_ViewNews(["Lihat Berita/Artikel"]):::usecase
+                UC_Register(["Registrasi Akun"]):::usecase
+                UC_Login(["Login System"]):::usecase
+            end
+
+            subgraph StudentArea["Student Area (Siswa)"]
+                direction TB
+                UC_DashboardSiswa(["Lihat Dashboard Siswa"]):::usecase
+                UC_FormDaftar(["Mengisi Formulir Pendaftaran Kursus"]):::usecase
+                UC_SubmitDaftar(["Submit Formulir"]):::usecase
+                UC_CancelDaftar(["Batalkan Pendaftaran"]):::usecase
+                UC_ViewBukti(["Lihat/Unduh Bukti Pendaftaran"]):::usecase
+                UC_Logout(["Logout"]):::usecase
+            end
+
+            subgraph AdminCMS["Admin Area (CMS)"]
+                direction TB
+                UC_DashboardAdmin(["Lihat Dashboard Admin"]):::usecase
+                UC_ManagePendaftaran(["Kelola Pendaftaran (Setujui/Tolak/Hapus)"]):::usecase
+                UC_ManageSettings(["Kelola Pengaturan Situs"]):::usecase
+                UC_ManageCourse(["Kelola Data Kursus (CRUD)"]):::usecase
+                UC_ManageNews(["Kelola Data Berita (CRUD)"]):::usecase
+                UC_ManageGallery(["Kelola Data Galeri (CRUD)"]):::usecase
+                UC_AdminLogout(["Logout Admin"]):::usecase
+            end
+
+            Guest --> UC_ViewHome
+            Guest --> UC_ViewProfil
+            Guest --> UC_ViewKursus
+            Guest --> UC_ViewNews
+            Guest --> UC_Register
+            Guest --> UC_Login
+
+            Siswa --> UC_Login
+            Siswa --> UC_DashboardSiswa
+            Siswa --> UC_FormDaftar
+            Siswa --> UC_SubmitDaftar
+            Siswa --> UC_CancelDaftar
+            Siswa --> UC_ViewBukti
+            Siswa --> UC_Logout
+
+            UC_FormDaftar -. "<<include>>" .-> UC_SubmitDaftar
+
+            Admin --> UC_Login
+            Admin --> UC_DashboardAdmin
+            Admin --> UC_ManagePendaftaran
+            Admin --> UC_ManageSettings
+            Admin --> UC_ManageCourse
+            Admin --> UC_ManageNews
+            Admin --> UC_ManageGallery
+            Admin --> UC_AdminLogout
+    </div>
+
+    <!-- Script Mermaid JS via CDN -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>
